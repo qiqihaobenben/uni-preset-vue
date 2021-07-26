@@ -7,10 +7,29 @@
 			}
 		}
 	],
+	"subPackages": [ // 分包相关
+		{
+			"root": "subPages",
+			"pages": [
+				{
+					"path": "index/index",
+					"style": {
+						"navigationBarTitleText": "uni-app"
+					}
+				}
+			]
+		}
+	],
+	"preloadRule": { // 分包预加载
+		"pages/index/index": {
+			"network": "all",
+			"packages": ["subPages"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#f5f7fa"
 	}
 }

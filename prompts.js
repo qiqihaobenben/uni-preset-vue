@@ -3,7 +3,7 @@ module.exports = [{
   name: 'template',
   message: '请选择 uni-app 模板',
   choices: [{
-    name: '默认模板',
+    name: '默认模板-微信小程序',
     value: 'default'
   },
   {

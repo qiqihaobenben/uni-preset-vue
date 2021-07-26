@@ -34,17 +34,48 @@ async function generate (dir, files, base = '', rootOptions = {}) {
 
 module.exports = (api, options, rootOptions) => {
   api.extendPackage(pkg => {
-    return {
-      dependencies: {
-        'regenerator-runtime': '^0.12.1',// 锁定版本，避免高版本在小程序中出错
-        '@dcloudio/uni-helper-json': '*'
-      },
-      devDependencies: {
-        "@babel/runtime": "~7.12.0",// 临时指定版本，7.13.x 会报错
-        'postcss-comment': '^2.0.0',
-        '@dcloudio/types': '*',
-        'miniprogram-api-typings': '*',
-        'mini-types': '*'
+    // 专门为微信小程序配置
+    if(options.template === 'default') {
+      return {
+        "upload-description": "",
+        scripts: {
+          "serve": "npm run dev:mp-weixin",
+          "build": "npm run build:mp-weixin",
+          "test": "npm run test:mp-weixin",
+          "build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
+          "test:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
+          "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+        },
+        dependencies: {
+          'regenerator-runtime': '^0.12.1',// 锁定版本，避免高版本在小程序中出错
+          '@dcloudio/uni-helper-json': '*',
+          "miniprogram-ci": "^1.2.3",
+          "dayjs": "^1.10.6"
+        },
+        devDependencies: {
+          "@babel/runtime": "~7.12.0",// 临时指定版本，7.13.x 会报错
+          'postcss-comment': '^2.0.0',
+          '@dcloudio/types': '*',
+          'miniprogram-api-typings': '*',
+          'mini-types': '*',
+          "webpack": "^4.44.0", // 版本高于 5 会报错
+          "sass": "^1.35.2",
+          "sass-loader": "^10.2.0",
+        }
+      }
+    }else {
+      return {
+        dependencies: {
+          'regenerator-runtime': '^0.12.1',// 锁定版本，避免高版本在小程序中出错
+          '@dcloudio/uni-helper-json': '*',
+        },
+        devDependencies: {
+          "@babel/runtime": "~7.12.0",// 临时指定版本，7.13.x 会报错
+          'postcss-comment': '^2.0.0',
+          '@dcloudio/types': '*',
+          'miniprogram-api-typings': '*',
+          'mini-types': '*',
+        }
       }
     }
   })
