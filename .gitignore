@@ -2,8 +2,10 @@
 .yarn-integrity
 .bin/
 *.md
+!document.md
 .npmignore
 *.yml
+!_gitlab-ci.yml
 *.jshintrc
 .eslintrc.json
 *.markdown

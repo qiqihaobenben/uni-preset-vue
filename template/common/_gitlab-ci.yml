@@ -1,0 +1,53 @@
+image: node:latest
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - dist/
+
+before_script:
+  - echo "======== before script ========"
+
+after_script:
+  - echo "======== after script ========"
+
+.common-config: &commonConfig
+  only:
+    - release
+    - master
+
+variables:
+  MESSAGE_SUFFIX: '--${CI_BUILD_REF_NAME}--${GITLAB_USER_NAME}'
+
+stages:
+  - test
+  - release
+
+test:
+  stage: test
+  tags:
+    - test
+  variables:
+    ENV: 'development'
+  only:
+    - master
+  script:
+    - npm install
+    - npm run test
+    - node scripts/upload.js
+    - bash scripts/send_msg.sh
+
+release:
+  stage: release
+  tags:
+    - test
+  variables:
+    ENV: 'production'
+  only:
+    - release
+  script:
+    - npm install
+    - npm run build
+    - node scripts/upload.js
+    - bash scripts/send_msg.sh
