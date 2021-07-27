@@ -1,27 +1,5 @@
 # 自定义微信小程序开发文档
 
-## 开始
-
-```
-npm install
-```
-
-### 开发
-
-```
-npm run serve
-```
-
-**项目运行起来后，打开小程序开发者工具，添加项目，目录地址在当前文件夹下的 dist/dev/mp-weixin**
-
-### 打包
-
-```
-npm run build
-```
-
-项目打包完毕后，打包后的地址在当前文件夹下的 dist/build/mp-weixin
-
 ## 文件及相关依赖介绍
 
 ### 文件介绍
@@ -56,6 +34,40 @@ npm run build
 2. vuex
 3. [dayjs](https://dayjs.gitee.io/zh-CN/)： 可用于时间处理
 
+## 前期配置
+
+### 配置文件 common/config.js
+
+需要将配置文档改成自己的项目真实配置，`NODE_ENV` 有 `development` 和 `production` 两种场景，根据自己的需要进行配置
+
+### 全局 HTTP 封装
+
+1. 请求路径全部整合到了 api.js 中，路径会根据 common/config.js 具体返回的 baseUrl 进行拼接。
+2. index.js 中封装了 get 和 post 请求，并对一些特殊情况进行了特殊处理
+3. login.js 文件主要是登录相关，因为作者的小程序都是通过 unionid 来进行用户校验的，所以在接口请求前会首先尝试获取用户的 unionid，获取失败，可以进行重试，重试的逻辑放到了 reloadCurrentPage 函数中
+
+### gitlab CI/CD 相关
+
+1. 如果你的代码托管平台是 gitlab，并配置了 runner，这里有最简单基本的 CI/CD 流程可用，详情可见 `.gitlab-ci.yml`。
+2. 基于 uni-app 的打包编译后的代码会根据环境不同存放在 `dist` 文件夹的不同目录下，借助 `miniprogram-ci` 包可以使用命令行实现小程序的上传，需要根据你的真实项目将 `scripts/upload.js` 进行完善
+3. 小程序上传体验版后，会通过企微机器人来进行通知，需要你在 `scripts/send_msg.sh` 中完善 webhook_url 相关
+
+### 开发
+
+```
+npm run serve
+```
+
+**项目运行起来后，打开小程序开发者工具，添加项目，目录地址在当前文件夹下的 dist/dev/mp-weixin**
+
+### 打包
+
+```
+npm run build
+```
+
+项目打包完毕后，打包后的地址在当前文件夹下的 dist/build/mp-weixin
+
 ## 小程序体验版更新流程
 
 ### 体验版更新流程
@@ -68,24 +80,9 @@ npm run build
 
 提审流程：小程序提审前，将 master 代码合并到 release，并推送到远程，即可进行生产环境的自动打包构建，然后自动更新体验版，之后在小程序后台进行提审。
 
-**联系陈方旭（fangxu.chen），加入一起打卡小程序通知群，即可收到每次更新成功的通知**
-
 ### 小程序代码上传的相关配置
 
 > 详情请查看 `scripts/upload.js` 文件
 
 1. 版本：上传的代码版本默认获取的是 `package.json` 中的 `version` 字段，所以每次版本迭代，请首先更新 `package.json` 中的 `version`
 2. 备注：首先会尝试获取 `package.json` 中的 `upload-description` 字段，如果没有就使用 `${package.version} 迭代 ${message_suffix}` 进行相关组合，根据配置更加前缀和后缀
-
-## 小程序配置
-
-#### 1、基础库配置最低为 2.4.0
-
-#### 还存在的问题
-
-1. 课程完成的打点待完善
-
-#### 第一次上线待办
-
-1. 业务域名新增
-2. 请求域名新增

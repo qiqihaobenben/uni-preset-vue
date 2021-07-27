@@ -100,15 +100,4 @@ export default {
 			return checkStatus(res, newData, showErrorTip);
 		});
 	},
-	uploadFile(url, filePath, name, data) {
-		return uni.uploadFile({
-			url,
-			filePath,
-			name: name || 'file',
-			formData: data || {},
-		}).then((response) => {
-			let [error, res] = response;
-			return checkStatus(res);
-		});
-	},
 };

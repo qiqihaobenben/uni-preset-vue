@@ -17,7 +17,7 @@ function getUnionid() {
         if(res.code) {
           uni.request({
             method: 'GET',
-            url: API.auth,
+            url: API.login,
             data: {js_code: res.code},
             header: {
               'X-Requested-With': 'XMLHttpRequest',
