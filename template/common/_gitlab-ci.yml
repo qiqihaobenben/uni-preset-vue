@@ -26,6 +26,7 @@ stages:
 
 test:
   stage: test
+  # TODO 需要更换自己真实的runner
   tags:
     - test
   variables:
@@ -40,6 +41,7 @@ test:
 
 release:
   stage: release
+  # TODO 需要更换自己真实的runner
   tags:
     - test
   variables:

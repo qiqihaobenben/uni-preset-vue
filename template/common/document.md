@@ -36,21 +36,23 @@
 
 ## 前期配置
 
+> 注意项目中带有 TODO 的注释，很可能是需要你修改的地方
+
 ### 配置文件 common/config.js
 
 需要将配置文档改成自己的项目真实配置，`NODE_ENV` 有 `development` 和 `production` 两种场景，根据自己的需要进行配置
 
 ### 全局 HTTP 封装
 
-1. 请求路径全部整合到了 api.js 中，路径会根据 common/config.js 具体返回的 baseUrl 进行拼接。
-2. index.js 中封装了 get 和 post 请求，并对一些特殊情况进行了特殊处理
-3. login.js 文件主要是登录相关，因为作者的小程序都是通过 unionid 来进行用户校验的，所以在接口请求前会首先尝试获取用户的 unionid，获取失败，可以进行重试，重试的逻辑放到了 reloadCurrentPage 函数中
+1. 请求路径全部整合到了 `common/http/api.js` 中，路径会根据 `common/config.js` 具体返回的 baseUrl 进行拼接。
+2. `common/http/index.js` 中封装了 get 和 post 请求，并对一些特殊情况进行了特殊处理。
+3. `common/http/login.js` 文件主要是登录相关，因为作者的小程序都是通过 unionid 来进行用户校验的，所以在接口请求前会首先尝试获取用户的 unionid，获取失败，可以进行重试，重试的逻辑放到了 reloadCurrentPage 函数中。
 
 ### gitlab CI/CD 相关
 
-1. 如果你的代码托管平台是 gitlab，并配置了 runner，这里有最简单基本的 CI/CD 流程可用，详情可见 `.gitlab-ci.yml`。
-2. 基于 uni-app 的打包编译后的代码会根据环境不同存放在 `dist` 文件夹的不同目录下，借助 `miniprogram-ci` 包可以使用命令行实现小程序的上传，需要根据你的真实项目将 `scripts/upload.js` 进行完善
-3. 小程序上传体验版后，会通过企微机器人来进行通知，需要你在 `scripts/send_msg.sh` 中完善 webhook_url 相关
+1. 如果你的代码托管平台是 gitlab，并配置了 runner，这里有最简单基本的 CI/CD 流程可用，根据 `master` 和 `release` 分支不同，执行不同的流水线，详情可见 `.gitlab-ci.yml`，需要根据自己的项目实际情况进行调整，可参考文档后面的 **体验版更新流程** 介绍。
+2. 基于 uni-app 的打包编译后的代码会根据环境不同存放在 `dist` 文件夹的不同目录下，借助 `miniprogram-ci` 包可以使用命令行实现小程序的自动上传，需要根据你的真实项目将 `scripts/upload.js` 进行完善。
+3. 小程序上传体验版后，会通过企微机器人来进行通知，需要你在 `scripts/send_msg.sh` 中完善 webhook_url 相关。
 
 ### 开发
 
