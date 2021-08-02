@@ -4,6 +4,8 @@
 
 ## 通过 vue-cli 命令行创建自定义微信小程序模板的 uni-app 项目
 
+> 同时解决了 vue-cli-plugin-uni 跟 webpack 5 不兼容的问题
+
 ## 环境安装
 
 全局安装 vue-cli

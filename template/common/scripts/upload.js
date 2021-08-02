@@ -16,9 +16,11 @@ let desc = package['upload-description'] || `${package.version} 迭代 ${message
 const privateKeyPath = path.resolve(__dirname, './private.wxxxxxxxxxxxxx.key')
 // TODO 此处需要设置项目真实的appid
 const appid = 'wxxxxxxxxxxxxx'
+let robot = 1;
 if(ENV === 'production') {
-  desc = `【生产环境】：${desc}`
+  desc = `【生产环境-可提交审核】：${desc}`
   projectPath = path.resolve(__dirname, '../dist/build/mp-weixin')
+  robot = 17
 }else {
   desc = `【测试环境】：${desc}`
 }
@@ -42,7 +44,7 @@ if(ENV === 'production') {
       minify: true,
       urlCheck: true
     },
-    robot: 17,
+    robot,
     onProgressUpdate: console.log,
   })
 })()
