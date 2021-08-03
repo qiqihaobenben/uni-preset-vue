@@ -45,6 +45,7 @@ module.exports = (api, options, rootOptions) => {
           "build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
           "test:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
           "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+          "mock:build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch"
         },
         dependencies: {
           'regenerator-runtime': '^0.12.1',// 锁定版本，避免高版本在小程序中出错
