@@ -14,6 +14,11 @@
 npm install -g @vue/cli
 ```
 
+> 已验证的环境：
+> node: 12.20.1
+> npm: 6.14.8
+> @vue/cli: 4.5.13
+
 ### 创建 uni-app
 
 **使用正式版**（对应 HBuilderX 最新正式版），注意这里的 preset 是 `qiqihaobenben/uni-preset-vue`
